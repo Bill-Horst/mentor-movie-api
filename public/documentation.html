@@ -1,5 +1,204 @@
-<h1>Documentation Page</h1>
+<!DOCTYPE html>
+<html>
 
-<h3>Page for explaining what the movie API does</h3>
+<head>
+    <meta charset="UTF-8">
+    <title>title</title>
+    <link href="documentation_style.css" rel="stylesheet">
+</head>
 
-<p>Performs CRUD operations on a movie database</p>
+<body>
+
+    <h1>Movie API Documentation Page</h1>
+
+    <table>
+        <tr>
+            <th>Logic</th>
+            <th>URL</th>
+            <th>HTTP Method</th>
+            <th>Request Body</th>
+            <th>Response Body</th>
+        </tr>
+        <tr>
+            <td>Get full list of all movies in database</td>
+            <td>/movies</td>
+            <td>GET</td>
+            <td>-none-</td>
+            <td>
+                <pre>
+[
+    {
+        title: 'Movie Title 1',
+        director: 'Movie Director 1'
+    },
+    {
+        title: 'Movie Title 2',
+        director: 'Movie Director 2'
+    }
+]
+              </pre>
+            </td>
+        </tr>
+        <tr>
+            <td>Get a movie's genre</td>
+            <td>/movies/:title/genre</td>
+            <td>GET</td>
+            <td>-none-</td>
+            <td>
+                <pre>
+{
+    genre: "horror"
+}
+                  </pre>
+            </td>
+        </tr>
+        <tr>
+            <td>Get full list of directors in database</td>
+            <td>/directors</td>
+            <td>GET</td>
+            <td>-none-</td>
+            <td>
+                <pre>
+[
+    {
+        director: 'Movie Director 1',
+        birthday: "09/09/1982"
+    },
+    {
+        director: 'Movie Director 2',
+        birthday: "09/09/1982"
+    }
+]
+                      </pre>
+            </td>
+        </tr>
+        <tr>
+            <td>Get full list of all movies in database</td>
+            <td>/movies</td>
+            <td>GET</td>
+            <td>-none-</td>
+            <td>
+                <pre>
+{
+    title: 'Movie Title',
+    director: 'Movie Director'
+}
+                          </pre>
+            </td>
+        </tr>
+        <tr>
+            <td>Get a director's info</td>
+            <td>/directors/:name</td>
+            <td>GET</td>
+            <td>-none-</td>
+            <td>
+                <pre>
+{
+    director: 'Movie Director',
+    bio: "A good director",
+    birth_year: "1983",
+    death_year: "2083"
+}
+                              </pre>
+            </td>
+        </tr>
+        <tr>
+            <td>Register new user</td>
+            <td>/users</td>
+            <td>POST</td>
+            <td>
+                <pre>
+{
+    username: "user123",
+    password: "password1",
+    email: "user@user.com",
+    birth_date: "09/09/1982"
+}
+                </pre>
+            </td>
+            <td>
+                <pre>
+{
+    username: "user123",
+    password: "password1",
+    email: "user@user.com",
+    birth_date: "09/09/1982"
+}
+                </pre>
+            </td>
+        </tr>
+        <tr>
+            <td>Update a user's info</td>
+            <td>/users/:id</td>
+            <td>PUT</td>
+            <td>
+                <pre>
+{
+    username: "user123",
+    password: "password1",
+    email: "user@user.com",
+    birth_date: "09/09/1982"
+}
+                    </pre>
+            </td>
+            <td>
+                <pre>
+{
+    username: "user123",
+    password: "password1",
+    email: "user@user.com",
+    birth_date: "09/09/1982"
+}
+                    </pre>
+            </td>
+        </tr>
+        <tr>
+            <td>Add a movie to a user's favorites list</td>
+            <td>/users/:id/favorite/:movie_id</td>
+            <td>POST</td>
+            <td>-none-</td>
+            <td>
+                <pre>
+{
+    username: "Billy Goat",
+    email: "goat@user.com",
+    favoriteMovies: ["Movie 1", "Movie 2", "Movie 4"]
+}
+                </pre>
+            </td>
+        </tr>
+        <tr>
+            <td>Remove a movie from a user's favorites list</td>
+            <td>/users/:id/favorite/:movie_id</td>
+            <td>DELETE</td>
+            <td>-none-</td>
+            <td>
+                <pre>
+{
+    username: "BillyGoat",
+    email: "goat@user.com",
+    favoriteMovies: ["Movie 1", "Movie 2"]
+}
+                </pre>
+            </td>
+        </tr>
+        <tr>
+            <td>Deregister a user</td>
+            <td>/users/:id/deregister</td>
+            <td>PUT</td>
+            <td>-none-</td>
+            <td>
+                <pre>
+{
+    username: "BillyGoat",
+    email: "goat@user.com",
+    active: false
+}
+                </pre>
+            </td>
+        </tr>
+    </table>
+
+</body>
+
+</html>
