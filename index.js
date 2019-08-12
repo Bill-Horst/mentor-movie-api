@@ -7,6 +7,8 @@ const uuid = require("uuid");
 const mongoose = require('mongoose');
 const Models = require('./models.js');
 const passport = require('passport');
+const cors = require('cors');
+const validator = require('express-validator');
 require('./passport');
 
 const Movies = Models.Movie;
@@ -16,6 +18,9 @@ mongoose.connect('mongodb://localhost:27017/movieApiDB', { useNewUrlParser: true
 
 app.use(bodyParser.json());
 app.use(morgan('common'));
+app.use(validator());
+
+app.use(cors());
 
 app.use(express.static('public'));
 
@@ -44,6 +49,20 @@ app.get('/directors/:name', passport.authenticate('jwt', { session : false }), f
     });
 });
 app.post('/users', function (req, res) {
+
+    req.checkBody('Username', 'Username is required').notEmpty();
+    req.checkBody('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric()
+    req.checkBody('Password', 'Password is required').notEmpty();
+    req.checkBody('Email', 'Email is required').notEmpty();
+    req.checkBody('Email', 'Email does not appear to be valid').isEmail();
+  
+    var errors = req.validationErrors();
+  
+    if (errors) {
+      return res.status(422).json({ errors: errors });
+    }
+
+    let hashedPassword = Users.hashPassword(req.body.Password);
     Users.findOne({ Username: req.body.Username })
         .then(function (user) {
             if (user) {
@@ -52,7 +71,7 @@ app.post('/users', function (req, res) {
                 Users
                     .create({
                         Username: req.body.Username,
-                        Password: req.body.Password,
+                        Password: hashedPassword,
                         Email: req.body.Email,
                         Birthday: req.body.Birthday
                     })
@@ -68,6 +87,19 @@ app.post('/users', function (req, res) {
         });
 });
 app.put('/users/:username', passport.authenticate('jwt', { session : false }), function (req, res) {
+
+    req.checkBody('Username', 'Username is required').notEmpty();
+    req.checkBody('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric()
+    req.checkBody('Password', 'Password is required').notEmpty();
+    req.checkBody('Email', 'Email is required').notEmpty();
+    req.checkBody('Email', 'Email does not appear to be valid').isEmail();
+  
+    var errors = req.validationErrors();
+  
+    if (errors) {
+      return res.status(422).json({ errors: errors });
+    }
+
     Users.findOneAndUpdate({ Username: req.params.username }, {
         $set:
         {
@@ -136,6 +168,14 @@ app.use(function (err, req, res, next) {
 });
 
 // listen for requests
-app.listen(8080, () =>
-    console.log('Listening on 8080.')
-);
+
+// DEV ENV:
+// app.listen(8080, () =>
+//     console.log('Listening on 8080.')
+// );
+
+// PROD ENV:
+var port = process.env.PORT || 3000;
+app.listen(port, "0.0.0.0", function() {
+console.log("Listening on Port 3000");
+});
