@@ -3,3 +3,6 @@ MONGO_MOVIE_API_2_7.js
 
 mongo_movies.json
 mongo_users.json
+
+.cache
+dist
