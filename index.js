@@ -14,7 +14,11 @@ require('./passport');
 const Movies = Models.Movie;
 const Users = Models.User;
 
-mongoose.connect('mongodb://localhost:27017/movieApiDB', { useNewUrlParser: true });
+// local connection:
+// mongoose.connect('mongodb://localhost:27017/movieApiDB', { useNewUrlParser: true });
+
+// deployed Mongo Atlas DB:
+mongoose.connect('mongodb+srv://movieApiDBAdmin:18j197ft5sf7@movieapidb-5sm08.mongodb.net/test?retryWrites=true&w=majority', { useNewUrlParser: true });
 
 app.use(bodyParser.json());
 app.use(morgan('common'));
