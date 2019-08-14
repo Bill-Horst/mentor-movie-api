@@ -24,7 +24,18 @@ app.use(bodyParser.json());
 app.use(morgan('common'));
 app.use(validator());
 
-app.use(cors());
+var allowedOrigins = ['*'];
+
+app.use(cors({
+  origin: function(origin, callback){
+    if(!origin) return callback(null, true);
+    if(allowedOrigins.indexOf(origin) === -1){ // If a specific origin isn’t found on the list of allowed origins
+      var message = 'The CORS policy for this application doesn’t allow access from origin ' + origin;
+      return callback(new Error(message ), false);
+    }
+    return callback(null, true);
+  }
+}));
 
 app.use(express.static('public'));
 
@@ -32,7 +43,7 @@ app.use(express.static('public'));
 app.get('/', function (req, res) {
     res.send('Welcome to the Movie API!');
 });
-app.get('/movies', passport.authenticate('jwt', { session : false }), function (req, res) {
+app.get('/movies', function (req, res) {
     Movies.find(function (err, movies) {
         res.json(movies);
     });
