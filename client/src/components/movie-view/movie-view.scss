@@ -1,0 +1,42 @@
+
+$primary-color: #282bcf;
+$primary-color-transparent: rgba(27, 29, 49, 0.7);
+$secondary-color: yellow;
+$tertiary-color: red;
+
+.movie-view {
+  font-family: 'Ubuntu', sans-serif;
+  background-color: $primary-color-transparent;
+  margin: 50px auto;
+  max-width: 700px;
+  padding: 10px;
+  color: $secondary-color;
+  border-radius: 5px;
+  box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+
+    .view-btn {
+    width: 100px;
+    margin: 10px 10px;
+    }
+
+    .btn-primary {
+    background-color: transparent;
+    border-color: $tertiary-color;
+    border-width: 2px;
+    color: white;
+    }
+
+    .btn-primary:hover {
+    background-color: $tertiary-color;
+    border-color: $tertiary-color;
+    }
+
+    .movie-poster {
+    width: 100%;
+    }
+
+    .label {
+    color: $tertiary-color;
+    }
+
+}
