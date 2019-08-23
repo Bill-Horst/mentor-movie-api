@@ -22,7 +22,7 @@ mongoose.connect('mongodb+srv://movieApiDBAdmin:18j197ft5sf7@movieapidb-5sm08.mo
 app.use(bodyParser.json());
 app.use(morgan('common'));
 
-app.use(cors());
+app.use(cors()); // maybe order matters... try putting auth below this cors to avoid cors errors on auth calls
 const auth = require('./auth')(app);
 app.use(validator());
 
@@ -32,7 +32,7 @@ app.use(express.static('public'));
 app.get('/', function (req, res) {
     res.send('Welcome to the Movie API!');
 });
-app.get('/movies', function (req, res) {
+app.get('/movies', passport.authenticate('jwt', { session : false }), function (req, res) {
     Movies.find(function (err, movies) {
         res.json(movies);
     });
