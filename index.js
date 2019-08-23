@@ -2,7 +2,6 @@ const express = require('express');
 const app = express();
 const morgan = require('morgan');
 const bodyParser = require("body-parser");
-const auth = require('./auth')(app);
 const uuid = require("uuid");
 const mongoose = require('mongoose');
 const Models = require('./models.js');
@@ -22,9 +21,10 @@ mongoose.connect('mongodb+srv://movieApiDBAdmin:18j197ft5sf7@movieapidb-5sm08.mo
 
 app.use(bodyParser.json());
 app.use(morgan('common'));
-app.use(validator());
 
 app.use(cors());
+const auth = require('./auth')(app);
+app.use(validator());
 
 app.use(express.static('public'));
 

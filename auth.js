@@ -12,7 +12,10 @@ function generateJWTToken(user) {
 }
 
 module.exports = (router) => {
+    console.log('ROUTEREEE')
     router.post('/login', (req, res) => {
+        console.log('USERNAME!!!! : ')
+        console.log(req.Username)
         passport.authenticate('local', { session : false }, (error, user, info) => {
             if (error || !user) {
                 return res.status(400).json({
