@@ -42,6 +42,12 @@ app.get('/movies/:title', passport.authenticate('jwt', { session : false }), fun
         res.json(movie);
     });
 });
+app.get('/users/:username', passport.authenticate('jwt', {session: false}), function (req, res) {
+    Users.findOne({ "Username": req.params.username }, function (err, user) {
+        console.log(user)
+        res.json(user);
+    });
+});
 app.get('/genre/:genre', passport.authenticate('jwt', { session : false }), function (req, res) {
     Movies.findOne({ "Genre.Name": req.params.genre }, function (err, movie) {
         res.json(movie.Genre);
