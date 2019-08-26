@@ -37,6 +37,11 @@ app.get('/movies', passport.authenticate('jwt', { session : false }), function (
         res.json(movies);
     });
 });
+app.get('/movies/id/:id', passport.authenticate('jwt', {session: false}), function (req, res) {
+    Movies.findOne({"_id": req.params.id}, function (err, movie) {
+        res.json(movie);
+    });
+});
 app.get('/movies/:title', passport.authenticate('jwt', { session : false }), function (req, res) {
     Movies.find({ "Title": req.params.title }, function (err, movie) {
         res.json(movie);
@@ -180,12 +185,12 @@ app.use(function (err, req, res, next) {
 // listen for requests
 
 // DEV ENV:
-// app.listen(8080, () =>
-//     console.log('Listening on 8080.')
-// );
+app.listen(8080, () =>
+    console.log('Listening on 8080.')
+);
 
 // PROD ENV:
-var port = process.env.PORT || 3000;
-app.listen(port, "0.0.0.0", function() {
-console.log("Listening on Port 3000");
-});
+// var port = process.env.PORT || 3000;
+// app.listen(port, "0.0.0.0", function() {
+// console.log("Listening on Port 3000");
+// });
